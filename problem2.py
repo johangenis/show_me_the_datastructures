@@ -1,6 +1,6 @@
 import os
 
-TEST_DIR = './testdir'
+TEST_DIR = "./testdir"
 
 
 def find_files(suffix=None, path=None):
@@ -22,17 +22,31 @@ def find_files(suffix=None, path=None):
     files_found = []
 
     for path_item in path_content:
-        if os.path.isfile(os.path.join(path, path_item)) and\
-         path_item.endswith(suffix):
+        if os.path.isfile(os.path.join(path, path_item)) and path_item.endswith(suffix):
             files_found.append(os.path.join(path, path_item))
         if os.path.isdir(os.path.join(path, path_item)):
-            files_found += find_files(suffix,
-                                      os.path.join(path, path_item))
+            files_found += find_files(suffix, os.path.join(path, path_item))
     return files_found
 
 
-# ['./testdir/subdir1/a.c', './testdir/subdir3/subsubdir1/b.c', './testdir/t1.c', './testdir/subdir5/a.c']
-print(find_files('.c', TEST_DIR))
-print(find_files())  # []
-print(find_files('', ''))  # []
-print(find_files(''))  # []
+# normal case
+def test_sample_dir():
+    files = find_files(".c", ".")
+    print(files)
+
+
+# empty suffix
+def test_sample_dir_2():
+    files = find_files("", ".")
+    print(files)
+
+
+# not a dir
+def test_sample_dir_3():
+    files = find_files(".c", ".h")
+    print(files)
+
+
+test_sample_dir()
+test_sample_dir_2()
+test_sample_dir_3()
